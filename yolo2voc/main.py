@@ -150,7 +150,7 @@ def read_classes_from_file(file_path):
         raise FileNotFoundError(f"[Error] File not found: {file_path}. Please check again!")
 
 
-def get_args(opt):
+def get_args():
     parser = argparse.ArgumentParser(
         description="Convert Pascal YOLO annotation to VOC format."
     )
@@ -257,21 +257,23 @@ def main(opt):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument("--yolo2voc", action="store_true", help="YOLO to VOC")
-    parser.add_argument("--voc2yolo_a", action="store_true", help="VOC to YOLO absolute")
-    args = parser.parse_args()
-
-    # head_rich_logger()
-    # text=Text("Starting conversion",style="bold blue")
-    # rich_logger(1, 6, "Finding all files *.json in folder")
-    txt_files = [
-        name for name in os.listdir(config.LABEL_DIR) if name.endswith(".txt")
-    ]
-    # rich_logger(1,6,"Finding all file successfully")
-    # rich_logger(2,6, "Starting conversion!")
-    with multiprocessing.Pool(os.cpu_count()) as pool:
-        pool.map(yolo2voc, txt_files)
-    pool.join()
-    # rich_logger()
+    options = get_args()
+    main(options)
+    # parser = argparse.ArgumentParser()
+    #
+    # parser.add_argument("--yolo2voc", action="store_true", help="YOLO to VOC")
+    # parser.add_argument("--voc2yolo_a", action="store_true", help="VOC to YOLO absolute")
+    # args = parser.parse_args()
+    #
+    # # head_rich_logger()
+    # # text=Text("Starting conversion",style="bold blue")
+    # # rich_logger(1, 6, "Finding all files *.json in folder")
+    # txt_files = [
+    #     name for name in os.listdir(config.LABEL_DIR) if name.endswith(".txt")
+    # ]
+    # # rich_logger(1,6,"Finding all file successfully")
+    # # rich_logger(2,6, "Starting conversion!")
+    # with multiprocessing.Pool(os.cpu_count()) as pool:
+    #     pool.map(yolo2voc, txt_files)
+    # pool.join()
+    # # rich_logger()
