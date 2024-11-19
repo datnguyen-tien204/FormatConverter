@@ -198,6 +198,7 @@ def get_args():
     parser.add_argument("xml_dir", help="Directory path to xml files.", type=str)
     parser.add_argument("json_file", help="Output COCO format json file.", type=str)
 
+
     args = parser.parse_args()
     return args
 
