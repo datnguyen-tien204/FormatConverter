@@ -1,0 +1,92 @@
+<annotation>
+    <folder>yolo2voc</folder>
+    <filename>201_01915_jpg.rf.aacb71eec6fe1d7cfba21d298fa723c2.xml</filename>
+    <path>D:\DatasetsCHA\FormatConverter\yolo2voc\201_01915_jpg.rf.aacb71eec6fe1d7cfba21d298fa723c2.xml</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>640</width>
+        <height>640</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>42</xmin>
+            <ymin>458</ymin>
+            <xmax>57</xmax>
+            <ymax>508</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>308</xmin>
+            <ymin>417</ymin>
+            <xmax>421</xmax>
+            <ymax>628</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>505</xmin>
+            <ymin>396</ymin>
+            <xmax>613</xmax>
+            <ymax>638</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>69</xmin>
+            <ymin>471</ymin>
+            <xmax>124</xmax>
+            <ymax>503</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>113</xmin>
+            <ymin>469</ymin>
+            <xmax>272</xmax>
+            <ymax>527</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>473</xmin>
+            <ymin>439</ymin>
+            <xmax>639</xmax>
+            <ymax>580</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>311</xmin>
+            <ymin>466</ymin>
+            <xmax>321</xmax>
+            <ymax>488</ymax>
+        </bndbox>
+    </object>
+</annotation>

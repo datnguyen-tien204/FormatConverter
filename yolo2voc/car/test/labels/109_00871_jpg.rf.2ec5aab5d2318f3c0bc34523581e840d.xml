@@ -1,0 +1,70 @@
+<annotation>
+    <folder>yolo2voc</folder>
+    <filename>109_00871_jpg.rf.2ec5aab5d2318f3c0bc34523581e840d.xml</filename>
+    <path>D:\DatasetsCHA\FormatConverter\yolo2voc\109_00871_jpg.rf.2ec5aab5d2318f3c0bc34523581e840d.xml</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>640</width>
+        <height>640</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>198</xmin>
+            <ymin>134</ymin>
+            <xmax>237</xmax>
+            <ymax>362</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>306</xmin>
+            <ymin>131</ymin>
+            <xmax>324</xmax>
+            <ymax>256</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>344</xmin>
+            <ymin>138</ymin>
+            <xmax>366</xmax>
+            <ymax>243</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>391</xmin>
+            <ymin>158</ymin>
+            <xmax>418</xmax>
+            <ymax>292</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>560</xmin>
+            <ymin>150</ymin>
+            <xmax>639</xmax>
+            <ymax>248</ymax>
+        </bndbox>
+    </object>
+</annotation>

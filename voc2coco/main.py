@@ -180,7 +180,6 @@ def get_args():
         description="Convert Pascal VOC annotation to COCO format."
     )
 
-    # Nhan full folder va doc tat ca file xml va Txt
     ## To do
 
     # Nhan 1 folder va chuyen sang COCO

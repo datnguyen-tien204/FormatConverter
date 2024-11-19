@@ -1,0 +1,59 @@
+<annotation>
+    <folder>yolo2voc</folder>
+    <filename>105_00054_jpg.rf.3bf781c51b8862654dca8e9e17c7c106.xml</filename>
+    <path>D:\DatasetsCHA\FormatConverter\yolo2voc\105_00054_jpg.rf.3bf781c51b8862654dca8e9e17c7c106.xml</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>640</width>
+        <height>640</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>Car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>100</xmin>
+            <ymin>423</ymin>
+            <xmax>209</xmax>
+            <ymax>542</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>422</xmin>
+            <ymin>388</ymin>
+            <xmax>451</xmax>
+            <ymax>595</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>469</xmin>
+            <ymin>378</ymin>
+            <xmax>504</xmax>
+            <ymax>573</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>Person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>388</xmin>
+            <ymin>407</ymin>
+            <xmax>409</xmax>
+            <ymax>531</ymax>
+        </bndbox>
+    </object>
+</annotation>

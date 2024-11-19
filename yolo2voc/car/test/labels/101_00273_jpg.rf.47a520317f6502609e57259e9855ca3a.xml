@@ -1,0 +1,15 @@
+<annotation>
+    <folder>yolo2voc</folder>
+    <filename>101_00273_jpg.rf.47a520317f6502609e57259e9855ca3a.xml</filename>
+    <path>D:\DatasetsCHA\FormatConverter\yolo2voc\101_00273_jpg.rf.47a520317f6502609e57259e9855ca3a.xml</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>640</width>
+        <height>640</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+
+</annotation>

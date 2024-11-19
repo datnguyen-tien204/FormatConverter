@@ -1,0 +1,26 @@
+<annotation>
+    <folder>yolo2voc</folder>
+    <filename>201_04618_jpg.rf.04c547257de3abd7d250f4d0e1a1805f.xml</filename>
+    <path>D:\DatasetsCHA\FormatConverter\yolo2voc\201_04618_jpg.rf.04c547257de3abd7d250f4d0e1a1805f.xml</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>640</width>
+        <height>640</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>Car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>275</xmin>
+            <ymin>269</ymin>
+            <xmax>450</xmax>
+            <ymax>423</ymax>
+        </bndbox>
+    </object>
+</annotation>

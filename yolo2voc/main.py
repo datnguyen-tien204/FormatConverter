@@ -1,88 +1,37 @@
-"""Label Convert
-
-Convert from YOLO -> VOC | VOC -> YOLO
+"""
+Alright reserved by datnguyen-tien204
+Profile: http://tien-datnguyen-blogs.me/
+Convert from YOLO -> VOC
 
 """
 import argparse
 import multiprocessing
 import os
 from xml.etree import ElementTree
-
 from PIL import Image
 from pascal_voc_writer import Writer
-
 import config
-from checking.checkSize import checkingSize
-from checking.existCheck import check_exist
+from checking.existCheck import check_and_handle_files
 import logging
 from rich.logging import RichHandler
+from rich import print as rprint
+from checking.folder_create import move_files_and_generate_trainval
+from checking.checkSize import validate_and_fix_voc_dataset
 
 
-def yolo2voc(txt_file: str) -> None:
-    """Convert YOLO to VOC
-    Args:
-        txt_file: str
-    """
-    w, h = Image.open(os.path.join(config.IMAGE_DIR, f"{txt_file[:-4]}.jpg")).size
+def yolo2voc(txt_file: str,classes_path:str,img_dir:str,label_dir:str,extension:str=".jpg") -> None:
+    lst_classes = read_classes_from_file(classes_path)
+    w, h = Image.open(os.path.join(img_dir, f"{txt_file[:-4]}.{extension}")).size
     writer = Writer(f"{txt_file[:-4]}.xml", w, h)
-    with open(os.path.join(config.LABEL_DIR, txt_file)) as f:
+    with open(os.path.join(label_dir, txt_file)) as f:
         for line in f.readlines():
             label, x_center, y_center, width, height = line.rstrip().split(" ")
             x_min = int(w * max(float(x_center) - float(width) / 2, 0))
             x_max = int(w * min(float(x_center) + float(width) / 2, 1))
             y_min = int(h * max(float(y_center) - float(height) / 2, 0))
             y_max = int(h * min(float(y_center) + float(height) / 2, 1))
-            writer.addObject(config.names[int(label)], x_min, y_min, x_max, y_max)
+            writer.addObject(lst_classes[int(label)], x_min, y_min, x_max, y_max)
     writer.save(os.path.join(config.XML_DIR, f"{txt_file[:-4]}.xml"))
-
-
-def voc2yolo(xml_file: str) -> None:
-    """Convert VOC to YOLO
-    Args:
-        xml_file: str
-    """
-    with open(f"{config.XML_DIR}/{xml_file}") as in_file:
-        tree = ElementTree.parse(in_file)
-        size = tree.getroot().find("size")
-        height, width = map(int, [size.find("height").text, size.find("width").text])
-
-    class_exists = False
-    for obj in tree.findall("object"):
-        name = obj.find("name").text
-        if name in config.names:
-            class_exists = True
-
-    if class_exists:
-        with open(f"{config.LABEL_DIR}/{xml_file[:-4]}.txt", "w") as out_file:
-            for obj in tree.findall("object"):
-                difficult = obj.find("difficult").text
-                if int(difficult) == 1:
-                    continue
-                xml_box = obj.find("bndbox")
-
-                x_min = float(xml_box.find("xmin").text)
-                y_min = float(xml_box.find("ymin").text)
-
-                x_max = float(xml_box.find("xmax").text)
-                y_max = float(xml_box.find("ymax").text)
-
-                # according to darknet annotation
-                box_x_center = (x_min + x_max) / 2.0 - 1
-                box_y_center = (y_min + y_max) / 2.0 - 1
-
-                box_w = x_max - x_min
-                box_h = y_max - y_min
-
-                box_x = box_x_center * 1.0 / width
-                box_w = box_w * 1.0 / width
-
-                box_y = box_y_center * 1.0 / height
-                box_h = box_h * 1.0 / height
-
-                b = [box_x, box_y, box_w, box_h]
-
-                cls_id = config.names.index(obj.find("name").text)
-                out_file.write(str(cls_id) + " " + " ".join([str(f"{i:.6f}") for i in b]) + "\n")
 
 
 def rich_logger(num_first,num_last, notification):
@@ -93,39 +42,6 @@ def rich_logger(num_first,num_last, notification):
     log = logging.getLogger("rich")
     formatted_numbers = f"[{num_first}|{num_last}]"
     log.info(f"{formatted_numbers} - {notification}!")
-
-
-
-def voc2yolo_a(xml_file: str) -> None:
-    """Convert VOC to YOLO with absolute cordinates
-    Args:
-        xml_file: str
-    """
-    with open(f"{config.XML_DIR}/{xml_file}") as in_file:
-        tree = ElementTree.parse(in_file)
-
-    class_exists = False
-    for obj in tree.findall("object"):
-        name = obj.find("name").text
-        if name in config.names:
-            class_exists = True
-
-    if class_exists:
-        with open(f"{config.LABEL_DIR}/{xml_file[:-4]}.txt", "w") as out_file:
-            for obj in tree.findall("object"):
-                difficult = obj.find("difficult").text
-                if int(difficult) == 1:
-                    continue
-                xml_box = obj.find("bndbox")
-                x_min = round(float(xml_box.find("xmin").text))
-                y_min = round(float(xml_box.find("ymin").text))
-
-                x_max = round(float(xml_box.find("xmax").text))
-                y_max = round(float(xml_box.find("ymax").text))
-
-                b = [x_min, y_min, x_max, y_max]
-                cls_id = config.names.index(obj.find("name").text)
-                out_file.write(str(cls_id) + " " + " ".join([str(f"{i}") for i in b]) + "\n")
 
 
 from rich.console import Console
@@ -225,33 +141,137 @@ def trainvaltest_activtation(input_images,output_folder,type):
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)
 
+def read_classes_from_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            names = [line.strip() for line in file if line.strip()]
+        return names
+    except FileNotFoundError:
+        raise FileNotFoundError(f"[Error] File not found: {file_path}. Please check again!")
+
+
+def get_args(opt):
+    parser = argparse.ArgumentParser(
+        description="Convert Pascal YOLO annotation to VOC format."
+    )
+
+    ## To do
+    parser.add_argument("--yolo2voc", action="store_true", help="YOLO to VOC")
+    parser.add_argument("--voc2yolo_a", action="store_true", help="VOC to YOLO absolute")
+    parser.add_argument("--extension_inp",choices=["jpg","jpeg","png"],help="Extension of image file",default=".jpg")
+    parser.add_argument("list_classes", type=str, help="Path to list classes, must be in txt format.")
+
+    ## Config part 1. Input: Label directory and image directory | Output: Output Directory.
+    parser.add_argument("--label_dir",type=str,help="Path to YOLO label directory. If use this not need to use --project_dir")
+    parser.add_argument("--image_dir", type=str, help="Path to YOLO images directory. If use this not need to use --project_dir")
+    parser.add_argument("--output_dir",type=str,help="Path to folder output. If use this not need to use --project_dir")
+
+    ## Config part 1. Input: Project directory | Output: Output Directory.
+    # Nhan 1 folder va chuyen sang COCO
+
+    parser.add_argument("--project_dir", type=str, help="Path to project. If use this not need to use --label_dir, --image_dir and --output_dir")
+    parser.add_argument("--train", action="store_true", help="Set output to VOC train. If use this not need to use --label_dir, --image_dir and --output_dir ")
+    parser.add_argument("--val", action="store_true",help="Set output to VOC val. If use this not need to use --label_dir, --image_dir and --output_dir ")
+    parser.add_argument("--test", action="store_true", help="Set output to VOC test. If use this not need to use --label_dir, --image_dir and --output_dir ")
+    parser.add_argument("--dataset-name", help="Name of the dataset.", type=str, default="Output_VOC")
+    args = parser.parse_args()
+    return args
+
+
+def create_folder_structure(output_folder):
+    """
+    Tạo cấu trúc thư mục đầu ra nếu chưa tồn tại.
+    """
+    annotations_dir = os.path.join(output_folder, "Annotations")
+    jpeg_images_dir = os.path.join(output_folder, "JPEGImages")
+    image_sets_dir = os.path.join(output_folder, "ImageSets/Main")
+
+    os.makedirs(annotations_dir, exist_ok=True)
+    os.makedirs(jpeg_images_dir, exist_ok=True)
+    os.makedirs(image_sets_dir, exist_ok=True)
+
+    return annotations_dir, jpeg_images_dir, image_sets_dir
+
+
+
+
+def main(opt):
+    head_rich_logger()
+
+    #Check Logic
+    if opt.project_dir and any([opt.label_dir, opt.image_dir, opt.output_dir]):
+        raise ValueError(
+            "You must choose either `--project_dir` or the combination of `--label_dir`, `--image_dir`, and `--output_dir`. "
+            "Both options cannot be used simultaneously."
+        )
+
+    if not opt.project_dir and not (opt.label_dir and opt.image_dir and opt.output_dir):
+        raise ValueError(
+            "You must specify either `--project_dir` or provide `--label_dir`, `--image_dir`, and `--output_dir` together."
+        )
+
+    if opt.extension_inp not in ["jpg","jpeg","png"]:
+        raise ValueError(
+            "Extension of image file must be in ['jpg','jpeg','png']"
+        )
+
+    if opt.extension_inp == "jpg":
+        extension = ".jpg"
+    if opt.extension_inp == "jpeg":
+        extension = ".jpeg"
+    if opt.extension_inp == "png":
+        extension = ".png"
+
+   # YOLO2VOC Relative
+    if opt.yolo2voc:
+        text = Text("[Mode] Conversion to YOLO Relative-BoundingBox. ", style="bold green")
+        rprint(text)
+        text = Text("Starting conversion...", style="bold blue")
+        rprint(text)
+
+        if opt.label_dir and opt.image_dir and opt.output_dir:
+            rich_logger(1,6, "Starting checking compability of file...")
+
+            has_discrepancy = check_and_handle_files(opt.image_dir, opt.label_dir,extensions=extension)
+            if not has_discrepancy:
+                print("[bold green]No extra or missing files found.[/bold green]")
+            rich_logger(1,6, "Checking compability of file successfully")
+            rich_logger(2, 6, "Preparing all files *.txt in folder")
+            txt_files = [
+                name for name in os.listdir(config.LABEL_DIR) if name.endswith(".txt")
+            ]
+            rich_logger(2, 6, "Preparing all file successfully")
+            rich_logger(3, 6, "Starting conversion Boundingbox....")
+            with multiprocessing.Pool(os.cpu_count()) as pool:
+                #def yolo2voc(txt_file: str,classes_path:str,img_dir:str,label_dir:str,extension:str=".jpg") -> None:
+                pool.map(yolo2voc, txt_files,classes_path=opt.list_classes,img_dir=opt.image_dir,label_dir=opt.label_dir,extension=extension)
+            pool.join()
+            rich_logger(3, 6, "Successfully conversion YOLO-Bounding-Box to VOC-Bounding-box")
+            rich_logger(4, 6, "Starting moving file to output folder...")
+            annotations_dir, jpeg_images_dir, trainval_path=move_files_and_generate_trainval(opt.image_dir, opt.label_dir, opt.output_dir,extensions=extension)
+            rich_logger(4, 6, "Successfully moving file to output folder")
+            rich_logger(5,6 ,"Starting final checking...")
+            validate_and_fix_voc_dataset(jpeg_images_dir, annotations_dir, trainval_path,extensions_in=extension)
+            rich_logger(5, 6, "Validation and fixes completed.")
+            rich_logger(6, 6, "Conversion successfully completed!")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--yolo2voc", action="store_true", help="YOLO to VOC")
-    parser.add_argument("--voc2yolo", action="store_true", help="VOC to YOLO")
     parser.add_argument("--voc2yolo_a", action="store_true", help="VOC to YOLO absolute")
     args = parser.parse_args()
 
-    head_rich_logger()
-    text=Text("Starting conversion",style="bold blue")
-    rich_logger(1, 6, "Finding all files *.json in folder")
+    # head_rich_logger()
+    # text=Text("Starting conversion",style="bold blue")
+    # rich_logger(1, 6, "Finding all files *.json in folder")
     txt_files = [
         name for name in os.listdir(config.LABEL_DIR) if name.endswith(".txt")
     ]
-    rich_logger(1,6,"Finding all file successfully")
-    rich_logger(2,6, "Starting conversion!")
-
+    # rich_logger(1,6,"Finding all file successfully")
+    # rich_logger(2,6, "Starting conversion!")
     with multiprocessing.Pool(os.cpu_count()) as pool:
         pool.map(yolo2voc, txt_files)
     pool.join()
-
-    if args.voc2yolo_a:
-        xml_files = [
-            name for name in os.listdir(config.XML_DIR) if name.endswith(".xml")
-        ]
-        with multiprocessing.Pool(os.cpu_count()) as pool:
-            pool.map(voc2yolo_a, xml_files)
-        pool.close()
+    # rich_logger()
