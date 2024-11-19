@@ -3,3 +3,5 @@ opencv-python
 imagesize
 rich
 lxml
+Pillow>=9.4.0
+pascal-voc-writer>=0.1.4
