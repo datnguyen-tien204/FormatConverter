@@ -1,0 +1,48 @@
+<annotation>
+    <folder>yolo2voc</folder>
+    <filename>driving-night-tokyo_000193_jpg.rf.415ff06287cb73bdc8cd1448fd5bc8e4.xml</filename>
+    <path>D:\DatasetsCHA\FormatConverter\yolo2voc\driving-night-tokyo_000193_jpg.rf.415ff06287cb73bdc8cd1448fd5bc8e4.xml</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>1280</width>
+        <height>720</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>traffic light</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>783</xmin>
+            <ymin>408</ymin>
+            <xmax>791</xmax>
+            <ymax>421</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>traffic light</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>440</xmin>
+            <ymin>401</ymin>
+            <xmax>457</xmax>
+            <ymax>433</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>676</xmin>
+            <ymin>457</ymin>
+            <xmax>710</xmax>
+            <ymax>482</ymax>
+        </bndbox>
+    </object>
+</annotation>

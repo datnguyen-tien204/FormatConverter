@@ -1,7 +1,12 @@
+###################### All code referenced from datnguyen-tien204 #########
+####################  Github: https://github.com/datnguyen-tien204  #########
+############ Profile: http://tien-datnguyen-blogs.me/
+### This code is used to check if the images in the YOLO images and YOLO labels match exist in the specified directory. #######
+
 import os
 import xml.etree.ElementTree as ET
 from PIL import Image
-from folder_create import rich_logger
+from .folder_create import rich_logger
 
 def fix_mismatched_sizes(image_folder, annotation_folder,extensions=".jpg"):
     for xml_file in os.listdir(annotation_folder):
@@ -53,9 +58,44 @@ def clean_invalid_files(image_folder, annotation_folder, trainval_file,extension
                 f.write(name + "\n")
 
 
+def clean_annotations(images_folder, labels_folder, annotations_file, extensions_in=".jpg"):
+    if not os.path.exists(images_folder):
+        raise FileNotFoundError(f"Image folder not exist: {images_folder}")
+    if not os.path.exists(labels_folder):
+        raise FileNotFoundError(f"Label folder not exist: {labels_folder}")
+    if not os.path.exists(annotations_file):
+        raise FileNotFoundError(f"Annotations file not exist: {annotations_file}")
+
+    # Lấy danh sách file ảnh và file nhãn (không bao gồm phần mở rộng)
+    image_files = {os.path.splitext(f)[0] for f in os.listdir(images_folder) if f.endswith(extensions_in)}
+    label_files = {os.path.splitext(f)[0] for f in os.listdir(labels_folder) if f.endswith(".xml")}
+
+    valid_lines = []
+    with open(annotations_file, "r") as f:
+        for line in f:
+            image_name = line.strip()
+            if image_name in image_files and image_name in label_files:
+                valid_lines.append(image_name)
+
+    # Ghi lại các dòng hợp lệ vào file annotations
+    with open(annotations_file, "w") as f:
+        f.writelines(line + "\n" for line in valid_lines)
+
+    rich_logger(5, 6, f"Cleaned annotations file: {annotations_file}. Valid lines: {len(valid_lines)}")
+
+
 def validate_and_fix_voc_dataset(image_folder, annotation_folder, trainval_file,extensions_in=".jpg"):
     rich_logger(5, 6, "Checking and fixing mismatched sizes...")
     fix_mismatched_sizes(image_folder, annotation_folder,extensions=extensions_in)
     rich_logger(5, 6, "Cleaning up invalid files...")
     clean_invalid_files(image_folder, annotation_folder, trainval_file,extensions=extensions_in)
     rich_logger(5, 6, "Validation and fixes completed.")
+
+def validate_and_fix_voc_dataset2(image_folder, annotation_folder,extensions_in=".jpg"):
+    rich_logger(5, 6, "Checking and fixing mismatched sizes...")
+    fix_mismatched_sizes(image_folder, annotation_folder,extensions=extensions_in)
+
+def cleaning_files(images_folder, labels_folder, annotations_file,extensions_in=".jpg"):
+    rich_logger(5, 6, f"Cleaning up invalid files {annotations_file}...")
+    clean_annotations(images_folder, labels_folder, annotations_file,extensions_in=extensions_in)
+    rich_logger(5, 6, f"Validation file {annotations_file} and fixes completed.")

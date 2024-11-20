@@ -5,6 +5,7 @@
 import os
 from rich import print
 from rich.prompt import Prompt
+from .folder_create import rich_logger
 
 def check_and_handle_files(images_folder, labels_folder,extensions=".jpg"):
     images = {os.path.splitext(f)[0] for f in os.listdir(images_folder) if f.endswith(extensions)}
@@ -13,18 +14,16 @@ def check_and_handle_files(images_folder, labels_folder,extensions=".jpg"):
     extra_labels = labels - images
 
     if extra_images or extra_labels:
-        print("[bold yellow] Unmatch file detected![/bold yellow]")
+        rich_logger(1, 6, f"Unmatch file detected!")
         if extra_images:
-            print(f"[red]Image no labels :[/red] {', '.join(extra_images)}")
+            rich_logger(1,6,f"Image no labels :{', '.join(extra_images)}")
         if extra_labels:
-            print(f"[red]Label no images:[/red] {', '.join(extra_labels)}")
+            rich_logger(1,6,f"Label no images :{', '.join(extra_labels)}")
 
         action = Prompt.ask(
             "[bold blue]What do you want to do?[/bold blue] (delete/skip)",
             choices=["del", "skip"]
         )
-
-
         if action == "del":
             for img in extra_images:
                 os.remove(os.path.join(images_folder, f"{img}.{extensions}"))
@@ -32,12 +31,12 @@ def check_and_handle_files(images_folder, labels_folder,extensions=".jpg"):
             for lbl in extra_labels:
                 os.remove(os.path.join(labels_folder, f"{lbl}.txt"))
                 print(f"[green]Deleted:[/green] {lbl}.txt")
-            print("[bold green]All extra files deleted![/bold green]")
+            rich_logger(1,6,"All extra files deleted!")
         else:
-            print("[bold cyan]Skipping file deletion.[/bold cyan]")
+            rich_logger(1,6,"Skipping file deletion.")
         return True
     else:
-        print("[bold green]All files are matched![/bold green]")
+        rich_logger(1, 6, f"All files are matched!")
         return False
 
 

@@ -1,3 +1,8 @@
+###################### All code referenced from datnguyen-tien204 #########
+####################  Github: https://github.com/datnguyen-tien204  #########
+############ Profile: http://tien-datnguyen-blogs.me/
+### This code is used to check if the images in the YOLO images and YOLO labels match exist in the specified directory. #######
+
 import os
 import shutil
 import logging
@@ -48,3 +53,30 @@ def move_files_and_generate_trainval(images_folder, labels_folder, output_folder
     rich_logger(4, 6, "Finished generating trainval.txt file")
 
     return annotations_dir, jpeg_images_dir, trainval_path
+
+def move_files_and_generate_type2(images_folder, labels_folder, output_folder, type="test", extensions=".jpg"):
+    annotations_dir, jpeg_images_dir, image_sets_dir = create_folder_structure(output_folder)
+    txt_file_path = os.path.join(image_sets_dir, f"{type}.txt")
+    file_names = []
+
+    for file_name in os.listdir(images_folder):
+        if file_name.endswith(extensions):
+            src_path = os.path.join(images_folder, file_name)
+            dest_path = os.path.join(jpeg_images_dir, file_name)
+            shutil.move(src_path, dest_path)
+            file_names.append(os.path.splitext(file_name)[0])
+
+    for file_name in os.listdir(labels_folder):
+        if file_name.endswith(".xml"):
+            src_path = os.path.join(labels_folder, file_name)
+            dest_path = os.path.join(annotations_dir, file_name)
+            shutil.move(src_path, dest_path)
+            file_names.append(os.path.splitext(file_name)[0])
+
+    rich_logger(4, 6, f"Generating {type}.txt...")
+    file_names = sorted(set(file_names))
+    with open(txt_file_path, "w") as f:
+        for name in file_names:
+            f.write(name + "\n")
+    rich_logger(4, 6, f"Finished generating {type}.txt.")
+    return annotations_dir, jpeg_images_dir, txt_file_path

@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 14
+names: ['bench', 'bicycle', 'bus', 'car', 'giraffe', 'kite', 'motorcycle', 'person', 'potted plant', 'stop sign', 'traffic light', 'train', 'truck', 'tv']
+
+roboflow:
+  workspace: studendidcard2
+  project: cardetection-oo5ar
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/studendidcard2/cardetection-oo5ar/dataset/1

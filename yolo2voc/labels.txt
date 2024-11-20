@@ -1,0 +1,14 @@
+bench
+bicycle
+bus
+car
+giraffe
+kite
+motorcycle
+person
+potted plant
+stop sign
+traffic light
+train
+truck
+tv

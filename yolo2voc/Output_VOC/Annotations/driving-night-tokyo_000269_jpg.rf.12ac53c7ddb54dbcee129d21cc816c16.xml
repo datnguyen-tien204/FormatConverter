@@ -1,0 +1,70 @@
+<annotation>
+    <folder>yolo2voc</folder>
+    <filename>driving-night-tokyo_000269_jpg.rf.12ac53c7ddb54dbcee129d21cc816c16.xml</filename>
+    <path>D:\DatasetsCHA\FormatConverter\yolo2voc\driving-night-tokyo_000269_jpg.rf.12ac53c7ddb54dbcee129d21cc816c16.xml</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>1280</width>
+        <height>720</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>traffic light</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>295</xmin>
+            <ymin>422</ymin>
+            <xmax>310</xmax>
+            <ymax>436</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>296</xmin>
+            <ymin>452</ymin>
+            <xmax>321</xmax>
+            <ymax>480</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>truck</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>628</xmin>
+            <ymin>410</ymin>
+            <xmax>783</xmax>
+            <ymax>531</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>435</xmin>
+            <ymin>448</ymin>
+            <xmax>507</xmax>
+            <ymax>500</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>312</xmin>
+            <ymin>453</ymin>
+            <xmax>385</xmax>
+            <ymax>531</ymax>
+        </bndbox>
+    </object>
+</annotation>

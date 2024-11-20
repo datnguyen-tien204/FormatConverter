@@ -1,0 +1,92 @@
+<annotation>
+    <folder>yolo2voc</folder>
+    <filename>driving-night-tokyo_000109_jpg.rf.f66eaa6a0596d304b6884752e837a6e6.xml</filename>
+    <path>D:\DatasetsCHA\FormatConverter\yolo2voc\driving-night-tokyo_000109_jpg.rf.f66eaa6a0596d304b6884752e837a6e6.xml</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>1280</width>
+        <height>720</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>708</xmin>
+            <ymin>465</ymin>
+            <xmax>730</xmax>
+            <ymax>491</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>traffic light</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>775</xmin>
+            <ymin>392</ymin>
+            <xmax>786</xmax>
+            <ymax>405</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>bus</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>618</xmin>
+            <ymin>437</ymin>
+            <xmax>713</xmax>
+            <ymax>539</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>600</xmin>
+            <ymin>451</ymin>
+            <xmax>623</xmax>
+            <ymax>488</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>618</xmin>
+            <ymin>436</ymin>
+            <xmax>712</xmax>
+            <ymax>541</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>728</xmin>
+            <ymin>463</ymin>
+            <xmax>771</xmax>
+            <ymax>509</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>767</xmin>
+            <ymin>433</ymin>
+            <xmax>907</xmax>
+            <ymax>539</ymax>
+        </bndbox>
+    </object>
+</annotation>
